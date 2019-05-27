@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klienci list</title>
+
+</head>
+<body>
+    <h2>Wyszukaj:</h2>
+    <form action=".", method="get">
+    Imię:<br>
+    <input type="text" name="imie"><br>
+    Nazwisko:<br>
+    <input type="text" name="nazwisko"><br>
+        <h4></h4>
+    <input type="submit" value="Wyszukaj">
+    </form>
+
+
+    <h1>Lista klientow:</h1>
+    {% for klient in klienci %}
+     <h3><a href="{% url "pokaz_klient_detal" klient.nr_klienta%}">
+          {{ klient.imie}} {{klient.nazwisko}}
+        </a><h3>
+    {% endfor %}
+
+
+     <form action="./dodaj/" method="get">
+         <p><input type="submit" value="Dodaj klienta" id="dodaj_hurtownie" style="height:40px;width:150px"></p></form>
+     <form action="./usun/" method="get">
+         <p><input type="submit" value="Usuń klienta" id="usun_hurtownie" style="height:40px;width:150px"></p></form>
+
+
+</body>
+</html>

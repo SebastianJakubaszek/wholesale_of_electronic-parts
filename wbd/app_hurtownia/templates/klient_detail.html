@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{klient.nazwa}} detail</title>
+</head>
+<body>
+    <h1>{{klient.imie}} {{klient.nazwisko}}</h1>
+    <h3>Imie: {{klient.imie}}</h3>
+    <h3>Nazwisko: {{klient.nazwisko}}</h3>
+    <h3>Nr telefonu: {{klient.nr_telefonu}}</h3>
+    <h3>Email: {{klient.email}}</h3>
+    <h3>Firma: {{klient.firma}}</h3>
+    <h3>Nazwa hurtowni:
+        <a href="{% url "pokaz_hurtownie_detal" hurtownia.nr_hurtowni%}">
+          {{ hurtownia.nazwa }}
+        </a></h3>
+    <h3>Login: {{konto.login}}</h3>
+    <h3>Haslo: {{konto.haslo}}</h3>
+</body>
+</html>

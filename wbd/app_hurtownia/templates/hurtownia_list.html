@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hurtownie list</title>
+
+</head>
+<body>
+    <h1>Lista hurtowni:</h1>
+    {% for hurtownia in hurtownie %}
+     <h3><a href="{% url "pokaz_hurtownie_detal" hurtownia.nr_hurtowni%}">
+          {{ hurtownia.nazwa }}
+        </a><h3>
+    {% endfor %}
+
+
+     <form action="./dodaj/" method="get">
+         <p><input type="submit" value="Dodaj hurtownie" id="dodaj_hurtownie" style="height:40px;width:150px"></p></form>
+     <form action="./usun/" method="get">
+         <p><input type="submit" value="Usuń hurtownie" id="usun_hurtownie" style="height:40px;width:150px"></p></form>
+
+
+</body>
+</html>

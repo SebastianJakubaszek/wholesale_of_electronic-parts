@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Usun hurtownie</title>
+</head>
+<body>
+    <h1>Usuwanie hurtowni</h1>
+    <h2>Wybierz hurtownie do usuniecia</h2>
+    <form action="" method="post">
+      {{ hurtownia_form.as_p }}
+      {% csrf_token %}
+      <p><input type="submit" value="Usuń hurtownie"></p>
+
+    </form>
+
+</body>
+</html>

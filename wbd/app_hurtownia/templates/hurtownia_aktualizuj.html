@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aktualizuj hurtownie</title>
+</head>
+<body>
+    <h1>Aktualizowanie hurtowni</h1>
+    <h2>{{hurtownia_name}}</h2>
+    <form action="" method="post">
+      {{ hurtownia_form.as_p }}
+      {% csrf_token %}
+      <p><input type="submit" value="Aktualizuj hurtownie"></p>
+
+    </form>
+
+</body>
+</html>
