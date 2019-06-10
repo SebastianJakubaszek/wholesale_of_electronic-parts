@@ -83,13 +83,20 @@ def aktualizuj_hurtownie(request, pk):
 
 
 def pokaz_klient(request):
-    imie = request.GET.get('imie')
-    nazwisko = request.GET.get('nazwisko')
+    imie = request.GET.get('imie', None)
+    nazwisko = request.GET.get('nazwisko', None)
+    empty = True
+    if nazwisko is None:
+        nazwisko = ""
+    if imie is None:
+        imie = ""
     response = requests.get('http://127.0.0.1:8000/api/klienci/?imie={}&nazwisko={}'.format(imie, nazwisko)).json()
-    return render(request, 'klient_list.html', {'klienci': response})
+    if len(response) != 0:
+        empty = False
+    return render(request, 'klient_list.html', {'klienci': response, 'empty': empty})
 
 
-def pokaz_klient_detal(request, pk):
+def pokaz_klient_detail(request, pk):
     response = requests.get('http://127.0.0.1:8000/api/klienci/{}'.format(pk)).json()
     response_hurtownia = requests.get('http://127.0.0.1:8000/api/hurtownie/{}'.format(response['nr_hurtowni'])).json()
     if not response['nr_konta'] is None:
@@ -153,7 +160,41 @@ def rejestruj_klient(request):
         klient_form = KlientFormRegister(hurtownie=response, konta=response_konto)
     return render(request, 'klient_rejestracja.html', {'klient_form': klient_form})
 
+
 def wyszukaj_klient(request,imie,nazwisko):
-    print('wszedlem')
     response = requests.get('http://127.0.0.1:8000/api/klienci?imie@{}&nazwisko@{}'.format(imie,nazwisko)).json()
     return render(request, 'klient_list.html', {'klienci': response})
+
+
+def pokaz_produkt(request):
+    nazwa = request.GET.get('nazwa', None)
+    empty = True
+    if nazwa is None:
+        nazwa = ""
+    response = requests.get('http://127.0.0.1:8000/api/produkty/?nazwa={}'.format(nazwa)).json()
+    if len(response) != 0:
+        empty = False
+    print(empty)
+    return render(request, 'produkt_list.html', {'produkty': response, 'empty': empty})
+
+def pokaz_produkt_detail(request,pk):
+    response = requests.get('http://127.0.0.1:8000/api/produkty/{}'.format(pk)).json()
+    response_producent = requests.get('http://127.0.0.1:8000/api/producenci/{}'.format(response['nr_producenta'])).json()
+    return render(request, 'produkt_detail.html', {'produkt': response, 'producent': response_producent})
+
+def pokaz_producent_detail(request,pk):
+    response = requests.get('http://127.0.0.1:8000/api/producenci/{}'.format(pk)).json()
+    return render(request, 'producent_detail.html', {'producent': response})
+
+def pokaz_producent(request):
+    nazwa = request.GET.get('nazwa', None)
+    empty = True
+    if nazwa is None:
+        nazwa = ""
+    response = requests.get('http://127.0.0.1:8000/api/producenci/?nazwa={}'.format(nazwa)).json()
+    if len(response) != 0:
+        empty = False
+    print(empty)
+    return render(request, 'producent_list.html', {'producenci': response, 'empty': empty})
+
+

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{produkt.nazwa}} detail</title>
+</head>
+<body>
+    <h1>Nazwa: {{produkt.nazwa}}</h1>
+    <h3>Cena: {{produkt.cena_sprzedazy}}</h3>
+    <h3>Opis: {{produkt.opis}}</h3>
+    <h3>Producent:<a href="{% url "pokaz_producent_detail" producent.nr_producenta%}">
+          {{ producent.nazwa }}
+        </a></h3></h3>
+</body>
+</html>

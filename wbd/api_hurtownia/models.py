@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 
 
@@ -135,9 +136,9 @@ class Producent(models.Model):
 
 
 class Produkt(models.Model):
-    nr_produktu = models.IntegerField(primary_key=True, editable=False)
+    nr_produktu = models.AutoField(primary_key=True, editable=False)
     nazwa = models.CharField(max_length=30)
-    opis = models.CharField(max_length=300, blank=True, null=True)
+    opis = models.TextField(max_length=500, blank=True, null=True)
     cena_zakupu = models.DecimalField(max_digits=10, decimal_places=2)
     cena_sprzedazy = models.DecimalField(max_digits=10, decimal_places=2)
     ilosc = models.IntegerField()
@@ -163,8 +164,6 @@ class Faktura(models.Model):
     kwota_netto = models.DecimalField(max_digits=10, decimal_places=2)
     kwota_brutto = models.DecimalField(max_digits=10, decimal_places=2)
     nr_transakcji = models.ForeignKey(Transakcja, related_name='faktura_transakcja', on_delete=models.CASCADE)
-
-
 
 
 

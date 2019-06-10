@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Producent list</title>
+
+</head>
+<body>
+    <h2>Wyszukaj:</h2>
+    <form action=".", method="get">
+    Nazwa:<br>
+    <input type="text" name="nazwa" placeholder="nazwa">
+        <h4></h4>
+    <input type="submit" value="Wyszukaj">
+    </form>
+
+
+    <h1>Lista producentów:</h1>
+    {% if empty == False %}
+    {% for producent in producenci %}
+     <h3><a href="{% url "pokaz_producent_detail" producent.nr_producenta%}">
+          {{ producent.nazwa}}
+        </a><h3>
+    {% endfor %}
+             {% else %}
+             <h3 style="color: red">Brak wyników spełniających kryteria wyszukiwania</h3>
+             {% endif %}
+
+             {% if request.user.is_superuser %}
+     <form action="./dodaj/" method="get">
+         <p><input type="submit" value="Dodaj producenta" id="dodaj_producenta" style="height:40px;width:150px"></p></form>
+     <form action="./usun/" method="get">
+         <p><input type="submit" value="Usuń producenta" id="usun_producenta" style="height:40px;width:150px"></p></form>
+              {%endif%}
+
+
+</body>
+</html>
