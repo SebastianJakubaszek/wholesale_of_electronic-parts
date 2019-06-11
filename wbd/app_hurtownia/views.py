@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import HurtowniaForm, KlientForm, HurtowniaFormUsun, HurtowniaFormAktualizuj, KlientFormRegister
+from .forms import HurtowniaForm, KlientForm, HurtowniaFormUsun, HurtowniaFormAktualizuj, KlientFormRegister, KlientFormUsun
 import requests
 
 
@@ -38,6 +38,7 @@ def usun_hurtownie(request):
         request_post = HurtowniaFormUsun(data=request.POST)
         if request_post.is_valid():
             request_post = request_post.cleaned_data
+        print(request_post['nazwa_hurtowni'])
         response = requests.delete('http://127.0.0.1:8000/api/hurtownie/{}'.format(request_post['nazwa_hurtowni']))
         if response.status_code == 204:
             status = "Usunięto hurtownie pomyślnie"
@@ -120,10 +121,10 @@ def dodaj_klient(request):
         request_post['nr_hurtowni'] = request_post.pop('nazwa_hurtowni')
         response = requests.post('http://127.0.0.1:8000/api/klienci/', data=request_post)
         if response.status_code == 201:
-            status = "Dodano hurtownie"
+            status = "Dodano klienta"
         else:
-            status = "Bład podczas dodawnia"
-        return render(request, 'hurtownia_dodaj_odpowiedz.html', {"status": status})
+            status = "Bład podczas klienta"
+        return render(request, 'klient_dodaj_odpowiedz.html', {"status": status})
 
 def rejestruj_klient(request):
     if request.method == "POST":
@@ -198,3 +199,21 @@ def pokaz_producent(request):
     return render(request, 'producent_list.html', {'producenci': response, 'empty': empty})
 
 
+
+
+def usun_klienta(request):
+    if request.method == "GET":
+        response = requests.get('http://127.0.0.1:8000/api/klienci').json()
+        print(len(response))
+        hurtownia_form = KlientFormUsun(klienci=response)
+        return render(request, 'klient_usun.html', {'klient_form': hurtownia_form})
+    elif request.method == "POST":
+        request_post = KlientFormUsun(data=request.POST)
+        if request_post.is_valid():
+            request_post = request_post.cleaned_data
+        response = requests.delete('http://127.0.0.1:8000/api/klienci/{}'.format(request_post['nazwa_klienta']))
+        if response.status_code == 204:
+            status = "Usunięto hurtownie pomyślnie"
+        else:
+            status = "Bład podczas usunięcia hurtowni"
+        return render(request, 'klient_dodaj_odpowiedz.html', {"status": status}, status=response.status_code)

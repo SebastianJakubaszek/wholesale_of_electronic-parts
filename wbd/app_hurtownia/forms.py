@@ -57,7 +57,6 @@ class KlientForm(forms.Form):
     email = forms.EmailField(max_length=30)
     firma = forms.CharField(max_length=30, required=False)
     nazwa_hurtowni = forms.ChoiceField()
-    nr_konta = forms.IntegerField(required=False)
 
 class KlientFormRegister(forms.Form):
     choices = []
@@ -101,3 +100,17 @@ class KlientFormRegister(forms.Form):
         if cd['login'] in self.konta:
             raise forms.ValidationError('Login juz istnieje')
         return cd['login']
+
+class KlientFormUsun(forms.Form):
+    def __init__(self,*args,**kwargs):
+        self.choices=[]
+        if 'request' in kwargs:
+            request = kwargs.pop('request')
+            self.user = request.user
+        if 'klienci' in kwargs:
+            for klient in kwargs.pop('klienci'):
+                self.choices.append((klient['nr_klienta'], "{} {}".format(klient['imie'], klient['nazwisko'])))
+        super(KlientFormUsun, self).__init__(*args, **kwargs)
+        self.fields['nazwa_klienta'] = forms.ChoiceField(choices=tuple(self.choices))
+
+    nazwa_klienta = forms.ChoiceField()
